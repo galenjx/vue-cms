@@ -36,6 +36,7 @@
     "@babel/polyfill": "^7.4.4",
     "@babel/runtime": "^7.5.5",
     "vue": "^2.6.10",
+    "vue-resource": "^1.5.1",
     "vue-router": "^3.1.2"
   }
 }
