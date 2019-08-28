@@ -7,10 +7,19 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 
 
+//导入格式化时间插件
+import moment from 'moment'
+//定义过滤器
+Vue.filter('dateFormat',function(datastr,pattern = "YYYY-MM-DD HH:mm:ss"){
+    return moment(datastr).format(pattern)
+})
+
 //2.1导入vue-resource
 import VueResource from 'vue-resource'
 //2.2安装 vue-resource
 Vue.use(VueResource)
+Vue.http.options.root = 'http://www.liulongbin.top:3005';
+
 
 //导入mint-ui的样式库
 import './lib/mui/css/mui.min.css'
@@ -23,10 +32,11 @@ import router from './router.js'
 import app from './App.vue'
 
 // 导入mint-ui头部组件并注册
-import { Header, Swipe, SwipeItem } from 'mint-ui';
+import { Header, Swipe, SwipeItem, Button} from 'mint-ui';
 Vue.component(Header.name, Header);
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
+Vue.component(Button.name, Button);
 
 
 var vm=new Vue({
