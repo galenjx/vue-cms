@@ -1,55 +1,51 @@
 <template>
   <div class="goods-list">
     
-    <div class="goods-item">
-      <img src="http://demo.dtcms.net/upload/201504/20/thumb_201504200059017695.jpg" alt="">
-      <h1 class="title">小米（Mi）小米Note 16G双网通版</h1>
+    <router-link class="goods-item" v-for="item in goodslist" :key="item.id" :to="'/home/goodsinfo/'+item.id" tag="div">
+      <img :src="item.img_url" alt="">
+      <h1 class="title">{{ item.title }}</h1>
       <div class="info">
         <p class="price">
-          <span class="now">￥899</span>
-          <span class="old">￥999</span>
+          <span class="now">￥{{ item.sell_price }}</span>
+          <span class="old">￥{{ item.market_price }}</span>
         </p>
         <p class="sell">
           <span>热卖中</span>
-          <span>剩60件</span>
+          <span>剩{{ item.stock_quantity }}件</span>
         </p>
       </div>
-    </div>
+    </router-link>
 
-    <div class="goods-item">
-      <img src="http://demo.dtcms.net/upload/201504/20/thumb_201504200214471783.jpg" alt="">
-      <h1 class="title">尼康(Nikon)D3300套机（18-55mm f/3.5-5.6G VRII）（黑色）</h1>
-      <div class="info">
-        <p class="price">
-          <span class="now">￥899</span>
-          <span class="old">￥999</span>
-        </p>
-        <p class="sell">
-          <span>热卖中</span>
-          <span>剩60件</span>
-        </p>
-      </div>
-    </div>
 
-    <div class="goods-item">
-      <img src="http://demo.dtcms.net/upload/201504/20/thumb_201504200059017695.jpg" alt="">
-      <h1 class="title">小米（Mi）小米Note 16G双网通版</h1>
-      <div class="info">
-        <p class="price">
-          <span class="now">￥899</span>
-          <span class="old">￥999</span>
-        </p>
-        <p class="sell">
-          <span>热卖中</span>
-          <span>剩60件</span>
-        </p>
-      </div>
-    </div>
-
+    <mt-button type="danger" size="large" @click="getmore">加载更多</mt-button>
   </div>
 </template>
 
 <script>
+export default {
+  data() {
+    return {
+      pageindex: 1,
+      goodslist: []
+    }
+  },
+  created() {
+    this.getGoodList();
+  },
+  methods:{
+    getGoodList() {
+      this.$http.get('api/getgoods?pageindex='+this.pageindex).then(result=>{
+        if(result.body.status===0){
+          this.goodslist=this.goodslist.concat(result.body.message);
+        }
+      })
+    },
+    getmore() {
+      this.pageindex++
+      this.getGoodList();
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
