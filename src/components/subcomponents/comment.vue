@@ -25,7 +25,7 @@
 <script>
 // import MintUI from 'mint-ui'
 // Vue.use(MintUI)
-import { Toast } from "mint-ui";
+// import { Toast } from "mint-ui";
 export default {
   data() {
     return {
@@ -47,9 +47,10 @@ export default {
             // this.comments = result.body.message;
             // 每当获取新评论数据的时候，不要把老数据清空覆盖，而是应该以老数据，拼接上新数据
             this.comments = this.comments.concat(result.body.message);
-          } else {
-            Toast("获取评论失败！");
-          }
+          } 
+          // else {
+          //   Toast("获取评论失败！");
+          // }
         });
     },
     getMore() {
@@ -60,7 +61,8 @@ export default {
     postComment() {
       // 校验是否为空内容
       if (this.msg.trim().length === 0) {
-        return Toast("评论内容不能为空！");
+        return 
+        // Toast("评论内容不能为空！");
       }
 
       // 发表评论
