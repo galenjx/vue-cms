@@ -14,7 +14,9 @@
           </div>
         </router-link>
       </li>
+
     </ul>
+
   </div>
 </template>
 <script>
@@ -33,7 +35,6 @@ export default {
     getNewsList() {
       // 获取新闻列表
       this.$http.get("api/getnewslist").then(result => {
-          console.log(result.body.message)
         if (result.body.status === 0) {
           // 如果没有失败，应该把数据保存到 data 上
           this.newslist = result.body.message;

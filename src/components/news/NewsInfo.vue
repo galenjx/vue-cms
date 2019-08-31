@@ -7,9 +7,12 @@
       <span>发表时间：{{ newsinfo.add_time | dateFormat }}</span>
       <span>点击：{{ newsinfo.click }}次</span>
     </p>
-    <hr />
+
+    <hr>
+
     <!-- 内容区域 -->
     <div class="content" v-html="newsinfo.content"></div>
+
     <!-- 评论子组件区域 -->
     <comment-box :id="this.id"></comment-box>
   </div>
@@ -31,6 +34,7 @@ export default {
   },
   methods: {
     getNewsInfo() {
+      // 获取新闻详情
       this.$http.get("api/getnew/" + this.id).then(result => {
         if (result.body.status === 0) {
           this.newsinfo = result.body.message[0];

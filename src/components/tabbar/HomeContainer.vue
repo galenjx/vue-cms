@@ -12,7 +12,7 @@
         </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <router-link to="/home/photo">
+        <router-link to="/home/photoList">
           <img src="../../images/menu2.png" alt />
           <div class="mui-media-body">图片分享</div>
         </router-link>
@@ -81,8 +81,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .mui-grid-view.mui-grid-9 {
   background-color: #fff;
   border: none;
@@ -90,12 +88,10 @@ export default {
     width: 60px;
     height: 60px;
   }
-
   .mui-media-body {
     font-size: 13px;
   }
 }
-
 .mui-grid-view.mui-grid-9 .mui-table-view-cell {
   border: 0;
 }

@@ -112,13 +112,16 @@ export default {
     addToShopCar() {
       // 添加到购物车
       this.ballFlag = !this.ballFlag;
+      // { id:商品的id, count: 要购买的数量, price: 商品的单价，selected: false  }
+      // 拼接出一个，要保存到 store 中 car 数组里的 商品信息对象
       var goodsinfo = {
         id: this.id,
         count: this.selectedCount,
         price: this.goodsinfo.sell_price,
         selected: true
-      }
-      this.$store.commit('addToCar',goodsinfo)
+      };
+      // 调用 store 中的 mutations 来将商品加入购物车
+      this.$store.commit("addToCar", goodsinfo);
     },
     beforeEnter(el) {
       el.style.transform = "translate(0, 0)";
@@ -135,7 +138,6 @@ export default {
 
       // 获取小球的 在页面中的位置
       const ballPosition = this.$refs.ball.getBoundingClientRect();
-      
       // 获取 徽标 在页面中的位置
       const badgePosition = document
         .getElementById("badge")
@@ -154,7 +156,6 @@ export default {
     getSelectedCount(count) {
       // 当子组件把 选中的数量传递给父组件的时候，把选中的值保存到 data 上
       this.selectedCount = count;
-      console.log('ok')
       console.log("父组件拿到的数量值为： " + this.selectedCount);
     }
   },
@@ -195,4 +196,3 @@ export default {
   }
 }
 </style>
-
