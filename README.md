@@ -1,113 +1,196 @@
 # 这是一个跟着某vue教学视频做的项目
-## 配置环境变量在cmd和powershell中使用git命令
-## 使用vscode提交代码到github
-1. 保存到暂存区
-2. 提交到git仓库
-3. 提交到远程仓库
-## 制作首页app组件
-1. 完成header区域，使用mint-ui组件
-2. 制作底部tabber区域，使用mui组件
- + 用到扩展图标，需要添加相应的css，tff
-3. 在中间放一个router-view 来展示匹配到的组件
 
-## 改造 tabber => router-link
+```shell
+//文件方式打开:直接下载，解压，双击运行dist/index.html文件，
+//或者：
+cnpm i
+npm run dev
+```
 
-## 设置路由高亮
+## 关于在学习中遇到的一些坑
 
-## 点击 tabber 中路由的连接，展示对应组件
+如果你也是在b站或者在其他地方看过这个教学练习项目，跟着视频做的话还有问题没有解决，那么下面的总结将会帮你解决90%的问题，由于视频是18年初左右的，现在webpack，Babel还有一些第三方组件都进行了更新，很多地方按照视频的做法会出现一系列问题。
 
-## 制作首页轮播图布局
+### webpack 4.x问题
 
-## 加载首页轮播图数据
-1. 获取数据， 如何获取呢， 使用 vue-resource
-2. 使用 vue-resource 的 this.$http.get 获取数据
-3. 获取到的数据，要保存到 data 身上
-4. 使用 v-for 循环渲染 每个 item 项
+1. 根据教程安装webpack后，输入webpack -v报错，
 
-## 改造 九宫格 区域的样式
+   ```javascript
+   One CLI for webpack must be installed. These are recommended choices, delivered as separate packages：
+   - webpack-cli (https://github.com/webpack/webpack-cli)
+     The original webpack full-featured CLI.
+   - webpack-command (https//github.com/webpack-contrib/webpack-command)
+     A lightweight, opinionated webpack CLI.
+   ```
 
-## 改造新闻资讯链接，路由
-1. 绘制界面
-2. 使用 vue-resource 获取数据
-3. 渲染真实数据
+   提示还需要安装webpack-cli(Mac 安装 webpack-command )，因webpack-cli封装了一系列命令如webpack，安装即可
 
-## 新闻列表点击跳转到详情
-1. 列表改为 router-link ，跳转时提供id标识符
-2. 创建新闻详情的组件页面 NewsInfo.vue
-3. 将新闻详情路由地址和组件页面对应起来（路由模块中）
+   ```shell
+   npm i webpack webpack-cli -D
+   ```
 
-## 实现 新闻详情 的 页面布局 和数据渲染
+2. 初次打包
 
-## 单独封装一个 comment.vue 评论子组件
-1. 先创建一个 单独的 comment.vue 组件模板
-2. 在需要使用 comment 组件的 页面中，先手动 导入 comment 组件
- + `import comment from './comment.vue'`
-3. 在父组件中，使用 `components` 属性，将刚才导入 comment 组件，注册为自己的 子组件
-4. 将注册子组件时候的，注册名称，以 标签形式，在页面中 引用即可
+   ```javascript
+   webpack ./src/index.js ./dist/bundle.js
+   ```
 
-## 获取所有的评论数据显示到页面中
+   ```javascript
+   //报错
+   WARNING in configuration
+   The 'mode' option has not been set, webpack will fallback to 'production' for this value. Set 'mode' option to 'development' or 'production' to enable defaults for each environment.
+   You can also set it to 'none' to disable any default behavior. Learn more: https://webpack.js.org/concepts/mode/
+   
+   ERROR in multi ./src/index.js ./dist/bundle.js
+   Module not found: Error: Can't resolve './dist/bundle.js' in 'E:\文档\webproject\homework\webpack'
+    @ multi ./src/index.js ./dist/bundle.js main[1]
+   ```
 
-## 实现点击加载更多评论的功能
-1. 为加载更多按钮，绑定点击事件，在事件中，请求 下一页数据
-2. 点击加载更多，让 pageIndex++ , 然后重新调用 this.getComments() 方法重新获取最新一页的数据
-3. 为了防止 新数据 覆盖老数据的情况，我们在 点击加载更多的时候，每当获取到新数据，应该让 老数据 调用 数组的 concat 方法，拼接上新数组
+   上面警告说 mode 没有指定，可以指定值为 production(会压缩) 或 development。 同时还有一个报错，没有找到模块，不能被解析,  原因是，webpack4 的打包已经不能用 webpack 文件a 文件b 的方式。 
 
+   webpack约定打包的入口文件为`src/index.js`,输出文件为`main.js`,在src下新建一个index.js，无需再建main.js，bundle.js，无需在配置文件`webpack.config.js`中指定输出入口，在配置文件中指定mode，再运行webpack即可
 
-## 发表评论
-1. 把文本框做双向数据绑定
-2. 为发表按钮绑定一个事件
-3. 校验评论内容是否为空，如果为空，则Toast提示用户 评论内容不能为空
-4. 通过 vue-resource 发送一个请求，把评论内容提交给 服务器
-5. 当发表评论OK后，重新刷新列表，以查看最新的评论
- + 如果调用 getComments 方法重新刷新评论列表的话，可能只能得到 最后一页的评论，前几页的评论获取不到
- + 换一种思路： 当评论成功后，在客户端，手动拼接出一个 最新的评论对象，然后 调用 数组的 unshift 方法， 把最新的评论，追加到  data 中 comments 的开头；这样，就能 完美实现刷新评论列表的需求；
+   ```javascript
+   module.exports={
+       mode:'development',
+   }
+   ```
 
-## 改造图片分析 按钮为 路由的链接并显示对应的组件页面
+   3.vue的配置
 
-## 绘制 图片列表 组件页面结构并美化样式
- 1. 制作 顶部的滑动条
- 2. 制作 底部的图片列表
-### 制作顶部滑动条的坑们：
- 1. 需要借助于 MUI 中的 tab-top-webview-main.html 
- 2. 需要把 slider 区域的 mui-fullscreen 类去掉
- 3. 滑动条无法正常触发滑动，通过检查官方文档，发现这是JS组件，需要被初始化一下：
-  + 导入 mui.js 
-  + 调用官方提供的 方式 去初始化：
-  ```
-  mui('.mui-scroll-wrapper').scroll({
-    deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
-  });
-  ```
- 4. 我们在初始化 滑动条 的时候，导入的 mui.js ，但是，控制台报错： `Uncaught TypeError: 'caller', 'callee', and 'arguments' properties may not be accessed on strict mode`
-  + 经过我们合理的推测，觉得，可能是 mui.js 中用到了 'caller', 'callee', and 'arguments' 东西，但是， webpack 打包好的 bundle.js 中，默认是启用严格模式的，所以，这两者冲突了；
-  + 解决方案： 1. 把 mui.js 中的 非严格 模式的代码改掉；但是不现实； 2. 把 webpack 打包时候的严格模式禁用掉；
-  + 最终，我们选择了 plan B  移除严格模式： 使用这个插件 babel-plugin-transform-remove-strict-mode
- 5. 刚进入 图片分享页面的时候， 滑动条无法正常工作， 经过我们认真的分析，发现， 如果要初始化 滑动条，必须要等 DOM 元素加载完毕，所以，我们把 初始化 滑动条 的代码，搬到了 mounted 生命周期函数中；
- 6. 当 滑动条 调试OK后，发现， tabbar 无法正常工作了，这时候，我们需要把 每个 tabbar 按钮的 样式中  `mui-tab-item` 重新改一下名字；
- 7. 获取所有分类，并渲染 分类列表；
+   按照视频安装了vue相关包之后，还是打包不了vue文件，因为15.x之后版本的vue-loader还需要在webpack.config.js中配置插件：
 
-### 制作图片列表区域
-1. 图片列表需要使用懒加载技术，我们可以使用 Mint-UI 提供的现成的 组件 `lazy-load`
-2. 根据`lazy-load`的使用文档，尝试使用
-3. 渲染图片列表数据
+   ```javascript
+   const VueLoaderPlugin = require('vue-loader/lib/plugin')
+   //并在plugins中增加一条
+   plugins:[
+           new VueLoaderPlugin()
+       ],
+   ```
 
-### 实现了 图片列表的 懒加载改造和 样式美化
+    ### 数据接口失效问题
 
-## 实现了 点击图片 跳转到 图片详情页面
-1. 在改造 li 成 router-link 的时候，需要使用 tag 属性指定要渲染为 哪种元素
+   视频中的数据接口已经不可用，可用的新接口：
 
-## 实现 详情页面的布局和美化，同时获取数据渲染页面
+   ```javascript
+   请求根路径：http://www.liulongbin.top:3005
+   ```
 
-## 实现 图片详情中 缩略图的功能
-1. 使用 插件 vue-preview 这个缩略图插件
-2. 获取到所有的图片列表，然后使用 v-for 指令渲染数据
-3. 注意： img标签上的class不能去掉
-4. 注意： 每个 图片数据对象中，必须有 w 和 h 属性
+   其他的请求地址按视频写即可
 
-## 绘制 商品列表 页面基本结构并美化
+   ### babel 7.x问题
 
-## 尝试在手机上 去进行项目的预览和测试
-1. 要保证自己的手机可以正常运行；
-2. 要保证 手机 和 开发项目的电脑 处于同一个 WIFI 环境中，也就是说 手机 可以 访问到 电脑的 IP
-3. 打开自己的 项目中 package.json 文件，在 dev 脚本中，添加一个 --host 指令， 把 当前 电脑的 WIFI IP地址， 设置为 --host 的指令值；
- + 如何查看自己电脑所处 WIFI 的IP呢， 在 cmd 终端中运行 `ipconfig` ， 查看 无线网的 ip 地址
+   
+
+   1.babel
+
+   在 babel7中，统一使用 `@babel/preset-env` ，在 webpack配置中 preset-env配合 babel-loader 就可以转换 ES2015+ 语法了。 按照相应格式安装相应包即可，如果你需要解释打包js的类，你还需要安装`@babel/plugin-proposal-class-properties `。
+
+   ```shell
+   cnpm i babel-loader @babel/core @babel/preset-env @babel/plugin-transform-runtime -D
+   cnpm i @babel/polyfill @babel/runtime -S
+   cnpm i @babel/plugin-proposal-class-properties
+   ```
+
+   配置`.babelrc`
+
+   ```
+   {
+       "presets": ["@babel/preset-env"],
+       "plugins": ["@babel/plugin-transform-runtime","@babel/plugin-proposal-class-properties",]
+   }
+   ```
+
+   如果需要了解更多，比如使用 `targets` 设定目标浏览器决定需要兼容的功能等等 可以参考文章`<https://blog.csdn.net/hrgzhy/article/details/91503951> `
+
+   2.mint-ui .babelrc配置问题
+
+   ```javascript
+   //这是官方文档文档写法，配置后运行出错，多了一个[]
+   {
+     "presets": [
+       ["es2015", { "modules": false }]
+     ],
+     "plugins": [["component", [
+       {
+         "libraryName": "mint-ui",
+         "style": true
+       }
+     ]]]
+   }
+   
+   //应改为
+   {
+     "presets": [
+       ["es2015", { "modules": false }]
+     ],
+     "plugins": [["component", 
+       {
+         "libraryName": "mint-ui",
+         "style": true
+       }
+     ]]
+   }
+   ```
+
+   3.babel取消严格模式问题
+
+   视频中的做法已废弃，正确的做法是
+
+   ```javascript
+   //安装
+   cnpm i @babel/plugin-transform-modules-commonjs @babel/plugin-transform-strict-mode -D
+   ```
+
+   ```javascript
+   //在.babelrc中进行配置
+   "plugins": [
+         ["@babel/plugin-transform-modules-commonjs", { "strictMode": false }]
+       ]
+   ```
+
+   ### vue-preview插件问题
+
+   由于插件经过了几次升级，用法和配置项发生了微小差异，用法可以直接参照我的代码PhotoInfo.vue部分，或参照官方文档`https://github.com/LS1231/vue-preview`
+
+   ```
+   import VuePreview from 'vue-preview'
+   
+   Vue.use(VuePreview)
+   
+   <template>
+     <vue-preview :slides="slide1" @close="handleClose"></vue-preview>
+   </template>
+   
+   <script>
+   export default {
+       data () {
+         return {
+           slide1: [
+             {
+               src: 'https://farm6.staticflickr.com/5591/15008867125_68a8ed88cc_b.jpg',
+               msrc: 'https://farm6.staticflickr.com/5591/15008867125_68a8ed88cc_m.jpg',
+               alt: 'picture1',
+               title: 'Image Caption 1',
+               w: 600,
+               h: 400
+             },
+             {
+               src: 'https://farm4.staticflickr.com/3902/14985871946_86abb8c56f_b.jpg',
+               msrc: 'https://farm4.staticflickr.com/3902/14985871946_86abb8c56f_m.jpg',
+               alt: 'picture2',
+               title: 'Image Caption 2',
+               w: 1200,
+               h: 900
+             }
+           ]
+         }
+       },
+       methods: {
+         handleClose () {
+           console.log('close event')
+         }
+       }
+     }
+   </script>
+   ```
