@@ -18,7 +18,7 @@ var router = new VueRouter({
   routes: [//设置路由规则的
     {path: '/', redirect: '/home'},
     {path: '/home', component: HomeContainer},
-    {path: '/menber', component: MenberContainer},
+    {path: '/member', component: MenberContainer},
     {path: '/shopcar', component: ShopcarContainer},
     {path: '/search', component: SearchContainer},
     {path: '/home/newslist', component: NewsList},
@@ -26,7 +26,7 @@ var router = new VueRouter({
     {path: '/home/photo', component: photoList},
     {path: '/home/Photoinfo/:id', component: photoInfo},
     {path: '/home/goodslist', component: GoodsList},
-    {path: '/home/goodsinfo/:id', component: GoodsInfo},
+    {path: '/home/goodsinfo/:id', component: GoodsInfo,name: 'goodsinfo'},
     { path: '/home/goodsdesc/:id', component:GoodsDesc, name: 'goodsdesc'  },
     { path: '/home/goodscomment/:id', component: GoodsComment, name: 'goodscomment' }
   ],
