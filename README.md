@@ -84,7 +84,7 @@ npm run dev
 
    1.babel
 
-   在 babel7中，统一使用 `@babel/preset-env` ，在 webpack配置中 preset-env配合 babel-loader 就可以转换 ES2015+ 语法了。 按照相应格式安装相应包即可，如果你需要解释打包js的类，你还需要安装`@babel/plugin-proposal-class-properties `。
+   在 babel7中，统一使用 `@babel/preset-***` ，在 webpack配置中 preset-env配合 babel-loader 就可以转换 ES2015+ 语法了。 按照相应格式安装相应包即可，如果你需要解释打包js的类，你还需要安装`@babel/plugin-proposal-class-properties `。
 
    ```shell
    cnpm i babel-loader @babel/core @babel/preset-env @babel/plugin-transform-runtime -D
@@ -148,6 +148,14 @@ npm run dev
          ["@babel/plugin-transform-modules-commonjs", { "strictMode": false }]
        ]
    ```
+
+   此时已经取消了严格模式，如果你是跟着视频做的话还是会报错:属性未定义
+
+   ```
+   Uncaught ReferenceError: _Header is not defined 
+   ```
+
+   此时需要你把mint-ui全部引进来，不要按需引入就可以了，mint-ui按需引入有问题，视频后面会讲到 。
 
    ### vue-preview插件问题
 
