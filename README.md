@@ -149,13 +149,13 @@ npm run dev
        ]
    ```
 
-   此时已经取消了严格模式，如果你是跟着视频做的话还是会报错:属性未定义
+   此时已经取消了严格模式，mui问题已经解决，如果你是跟着视频做的话还是会报错:属性未定义
 
    ```javascript
    Uncaught ReferenceError: _Header is not defined 
    ```
 
-   此时需要你在index.js把mint-ui全部引进来，不要按需引入就可以了，mint-ui按需引入有问题，视频后面会讲到 。
+   点开报错的js文件，观看打包后的代码你会发现是引入mint-ui组件的名称未定义，此时需要你在index.js把mint-ui全部引进来，不要按需引入就可以了，mint-ui按需引入有问题，视频后面会讲到 ，但如果你用的是Babel6，此时还不会抛出miut-ui的问题。
 
    ```javascript
    import MintUI from 'mint-ui'
@@ -166,7 +166,7 @@ npm run dev
 
    ### vue-preview插件问题
 
-   由于插件经过了几次升级，用法和配置项发生了微小差异，用法可以直接参照我的代码PhotoInfo.vue部分，或参照官方文档`https://github.com/LS1231/vue-preview`
+   由于插件经过了几次升级，用法和配置项发生了微小差异，而且图片排布已经与以前不一样了，想要与视频一样，可能需要自己写，或用其他插件，或其他组件库，我就直接用新的默认排布了，用法可以直接参照我的代码PhotoInfo.vue部分，或参照官方文档`https://github.com/LS1231/vue-preview`
 
    ```
    import VuePreview from 'vue-preview'
