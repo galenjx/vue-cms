@@ -162,6 +162,14 @@ npm run dev
    Vue.use(MintUI)
    ```
 
+   在评论子组件使用mint-ui的Toast方法如果使用两次，仍然会报错它未定义，使用一次则功能正常，我也没有找到原因，这里建议使用它提供实例上的方法，通过 `vm.$toast` 调用 ，功能正常
+
+   ```javascript
+   //代码里使用Toast的两处改为：
+   this.$toast("获取评论失败！")
+   return this.$toast("评论内容不能为空！");
+   ```
+
    
 
    ### vue-preview插件问题
