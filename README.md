@@ -151,11 +151,18 @@ npm run dev
 
    此时已经取消了严格模式，如果你是跟着视频做的话还是会报错:属性未定义
 
-   ```
+   ```javascript
    Uncaught ReferenceError: _Header is not defined 
    ```
 
-   此时需要你把mint-ui全部引进来，不要按需引入就可以了，mint-ui按需引入有问题，视频后面会讲到 。
+   此时需要你在index.js把mint-ui全部引进来，不要按需引入就可以了，mint-ui按需引入有问题，视频后面会讲到 。
+
+   ```javascript
+   import MintUI from 'mint-ui'
+   Vue.use(MintUI)
+   ```
+
+   
 
    ### vue-preview插件问题
 
