@@ -7,7 +7,7 @@
     <mt-button type="primary" size="large" @click="postComment">发表评论</mt-button>
 
     <div class="cmt-list">
-      <div class="cmt-item" v-for="(item, i) in comments" :key="item.add_time">
+      <div class="cmt-item" v-for="(item, i) in comments" :key="i">
         <div class="cmt-title">
           第{{ i+1 }}楼&nbsp;&nbsp;用户：{{ item.user_name }}&nbsp;&nbsp;发表时间：{{ item.add_time | dateFormat }}
         </div>
