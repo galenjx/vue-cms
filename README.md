@@ -79,7 +79,7 @@ npm run dev
    视频中的数据接口已经不可用，可用的新接口：
 
    ```javascript
-   请求根路径：http://www.liulongbin.top:3005
+   请求根路径：http://api.cms.liulongbin.top
    ```
 
    其他的请求地址按视频写即可
